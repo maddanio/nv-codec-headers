@@ -45,6 +45,9 @@ typedef void* CUarray;
 typedef void* CUcontext;
 typedef void* CUstream;
 typedef void* CUevent;
+typedef void* CUmodule;
+typedef void* CUfunction;
+typedef void* CUtexref;
 #if defined(__x86_64) || defined(AMD64) || defined(_M_AMD64)
 typedef unsigned long long CUdeviceptr;
 #else
@@ -109,6 +112,32 @@ typedef enum CUGLDeviceList_enum {
     CU_GL_DEVICE_LIST_NEXT_FRAME = 3,
 } CUGLDeviceList;
 
+typedef enum CUjit_option_enum {
+    CU_JIT_MAX_REGISTERS = 0,
+    CU_JIT_THREADS_PER_BLOCK,
+    CU_JIT_WALL_TIME,
+    CU_JIT_INFO_LOG_BUFFER,
+    CU_JIT_INFO_LOG_BUFFER_SIZE_BYTES,
+    CU_JIT_ERROR_LOG_BUFFER,
+    CU_JIT_ERROR_LOG_BUFFER_SIZE_BYTES,
+    CU_JIT_OPTIMIZATION_LEVEL,
+    CU_JIT_TARGET_FROM_CUCONTEXT,
+    CU_JIT_TARGET,
+    CU_JIT_FALLBACK_STRATEGY,
+    CU_JIT_GENERATE_DEBUG_INFO,
+    CU_JIT_LOG_VERBOSE,
+    CU_JIT_GENERATE_LINE_INFO,
+    CU_JIT_CACHE_MODE,
+    CU_JIT_NEW_SM3X_OPT,
+    CU_JIT_FAST_COMPILE,
+    CU_JIT_NUM_OPTIONS
+} CUjit_option;
+
+typedef enum CUfilter_mode_enum {
+    CU_TR_FILTER_MODE_POINT = 0,
+    CU_TR_FILTER_MODE_LINEAR = 1
+} CUfilter_mode;
+
 #define CU_STREAM_NON_BLOCKING 1
 #define CU_EVENT_BLOCKING_SYNC 1
 #define CU_EVENT_DISABLE_TIMING 2
@@ -150,4 +179,13 @@ typedef CUresult CUDAAPI tcuGraphicsMapResources(unsigned int count, CUgraphicsR
 typedef CUresult CUDAAPI tcuGraphicsUnmapResources(unsigned int count, CUgraphicsResource* resources, CUstream hStream);
 typedef CUresult CUDAAPI tcuGraphicsSubResourceGetMappedArray(CUarray* pArray, CUgraphicsResource resource, unsigned int arrayIndex, unsigned int mipLevel);
 
+typedef CUresult CUDAAPI tcuModuleLoadDataEx(CUmodule* module, const void* image, unsigned int numOptions, CUjit_option* options, void** optionValues);
+typedef CUresult CUDAAPI tcuModuleUnload(CUmodule* module);
+typedef CUresult CUDAAPI tcuModuleGetFunction(CUfunction* hfunc, CUmodule hmod, const char* name);
+typedef CUresult CUDAAPI tcuModuleGetGlobal(CUdeviceptr* dptr, size_t* bytes, CUmodule hmod, const char* name);
+typedef CUresult CUDAAPI tcuModuleGetTexRef(CUtexref* pTexRef, CUmodule hmod, const char* name);
+typedef CUresult CUDAAPI tcuLaunchKernel(CUfunction f, unsigned int  gridDimX, unsigned int  gridDimY, unsigned int  gridDimZ, unsigned int  blockDimX, unsigned int  blockDimY, unsigned int  blockDimZ, unsigned int  sharedMemBytes, CUstream hStream, void** kernelParams, void** extra);
+
+typedef CUresult CUDAAPI tcuTexRefSetArray(CUtexref hTexRef, CUarray hArray, unsigned int Flags);
+typedef CUresult CUDAAPI tcuTexRefSetFilterMode(CUtexref hTexRef, CUfilter_mode fm);
 #endif

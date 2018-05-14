@@ -171,6 +171,16 @@ typedef struct CudaFunctions {
     tcuGraphicsUnmapResources *cuGraphicsUnmapResources;
     tcuGraphicsSubResourceGetMappedArray *cuGraphicsSubResourceGetMappedArray;
 
+    tcuModuleLoadDataEx *cuModuleLoadDataEx;
+    tcuModuleUnload *cuModuleUnload;
+    tcuModuleGetFunction *cuModuleGetFunction;
+    tcuModuleGetGlobal *cuModuleGetGlobal;
+    tcuModuleGetTexRef *cuModuleGetTexRef;
+    tcuLaunchKernel *cuLaunchKernel;
+
+    tcuTexRefSetArray *cuTexRefSetArray;
+    tcuTexRefSetFilterMode *cuTexRefSetFilterMode;
+
     FFNV_LIB_HANDLE lib;
 } CudaFunctions;
 #else
@@ -269,6 +279,16 @@ static inline int cuda_load_functions(CudaFunctions **functions, void *logctx)
     LOAD_SYMBOL(cuGraphicsMapResources, tcuGraphicsMapResources, "cuGraphicsMapResources");
     LOAD_SYMBOL(cuGraphicsUnmapResources, tcuGraphicsUnmapResources, "cuGraphicsUnmapResources");
     LOAD_SYMBOL(cuGraphicsSubResourceGetMappedArray, tcuGraphicsSubResourceGetMappedArray, "cuGraphicsSubResourceGetMappedArray");
+
+    LOAD_SYMBOL(cuModuleLoadDataEx, tcuModuleLoadDataEx, "cuModuleLoadDataEx");
+    LOAD_SYMBOL(cuModuleUnload, tcuModuleUnload, "tcuModuleUnload");
+    LOAD_SYMBOL(cuModuleGetFunction, tcuModuleGetFunction, "cuModuleGetFunction");
+    LOAD_SYMBOL(cuModuleGetGlobal, tcuModuleGetGlobal, "cuModuleGetGlobal");
+    LOAD_SYMBOL(cuModuleGetTexRef, tcuModuleGetTexRef, "cuModuleGetTexRef");
+    LOAD_SYMBOL(cuLaunchKernel, tcuLaunchKernel, "cuLaunchKernel");
+
+    LOAD_SYMBOL(cuTexRefSetArray, tcuTexRefSetArray, "cuTexRefSetArray");
+    LOAD_SYMBOL(cuTexRefSetFilterMode, tcuTexRefSetFilterMode, "cuTexRefSetFilterMode");
 
     GENERIC_LOAD_FUNC_FINALE(cuda);
 }
