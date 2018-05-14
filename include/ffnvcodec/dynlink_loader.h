@@ -281,7 +281,7 @@ static inline int cuda_load_functions(CudaFunctions **functions, void *logctx)
     LOAD_SYMBOL(cuGraphicsSubResourceGetMappedArray, tcuGraphicsSubResourceGetMappedArray, "cuGraphicsSubResourceGetMappedArray");
 
     LOAD_SYMBOL(cuModuleLoadDataEx, tcuModuleLoadDataEx, "cuModuleLoadDataEx");
-    LOAD_SYMBOL(cuModuleUnload, tcuModuleUnload, "tcuModuleUnload");
+    LOAD_SYMBOL(cuModuleUnload, tcuModuleUnload, "cuModuleUnload");
     LOAD_SYMBOL(cuModuleGetFunction, tcuModuleGetFunction, "cuModuleGetFunction");
     LOAD_SYMBOL(cuModuleGetGlobal, tcuModuleGetGlobal, "cuModuleGetGlobal");
     LOAD_SYMBOL(cuModuleGetTexRef, tcuModuleGetTexRef, "cuModuleGetTexRef");
