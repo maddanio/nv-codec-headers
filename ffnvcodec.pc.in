@@ -5,3 +5,5 @@ Name: ffnvcodec
 Description: FFmpeg version of Nvidia Codec SDK headers
 Version: 8.1.24.3
 Cflags: -I${includedir}
+Libs: -ldl
+
