@@ -141,6 +141,7 @@ typedef enum CUfilter_mode_enum {
 #define CU_STREAM_NON_BLOCKING 1
 #define CU_EVENT_BLOCKING_SYNC 1
 #define CU_EVENT_DISABLE_TIMING 2
+#define CU_TRSA_OVERRIDE_FORMAT 0x01
 
 typedef void CUDAAPI CUstreamCallback(CUstream hStream, CUresult status, void *userdata);
 
