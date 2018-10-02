@@ -180,6 +180,13 @@ typedef CUresult CUDAAPI tcuGraphicsMapResources(unsigned int count, CUgraphicsR
 typedef CUresult CUDAAPI tcuGraphicsUnmapResources(unsigned int count, CUgraphicsResource* resources, CUstream hStream);
 typedef CUresult CUDAAPI tcuGraphicsSubResourceGetMappedArray(CUarray* pArray, CUgraphicsResource resource, unsigned int arrayIndex, unsigned int mipLevel);
 
+typedef CUresult CUDAAPI tcuGLRegisterBufferObject(GLuint buffer);
+typedef CUresult CUDAAPI tcuGLUnregisterBufferObject(GLuint buffer);
+typedef CUresult CUDAAPI tcuGLMapBufferObject(CUdeviceptr* dptr, size_t* size, GLuint buffer);
+typedef CUresult CUDAAPI tcuGLMapBufferObjectAsync(CUdeviceptr* dptr, size_t* size, GLuint buffer, CUstream hStream);
+typedef CUresult CUDAAPI tcuGLUnmapBufferObject(GLuint buffer);
+typedef CUresult CUDAAPI tcuGLUnmapBufferObjectAsync(GLuint buffer, CUstream hStream);
+
 typedef CUresult CUDAAPI tcuModuleLoadDataEx(CUmodule* module, const void* image, unsigned int numOptions, CUjit_option* options, void** optionValues);
 typedef CUresult CUDAAPI tcuModuleUnload(CUmodule* module);
 typedef CUresult CUDAAPI tcuModuleGetFunction(CUfunction* hfunc, CUmodule hmod, const char* name);

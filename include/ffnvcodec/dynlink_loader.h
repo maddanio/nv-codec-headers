@@ -178,6 +178,13 @@ typedef struct CudaFunctions {
     tcuModuleGetTexRef *cuModuleGetTexRef;
     tcuLaunchKernel *cuLaunchKernel;
 
+    tcuGLRegisterBufferObject *cuGLRegisterBufferObject;
+    tcuGLUnregisterBufferObject *cuGLUnregisterBufferObject;
+    tcuGLMapBufferObject *cuGLMapBufferObject;
+    tcuGLMapBufferObjectAsync *cuGLMapBufferObjectAsync;
+    tcuGLUnmapBufferObject *cuGLUnmapBufferObject;
+    tcuGLUnmapBufferObjectAsync *cuGLUnmapBufferObjectAsync;
+
     tcuTexRefSetArray *cuTexRefSetArray;
     tcuTexRefSetFilterMode *cuTexRefSetFilterMode;
 
@@ -279,6 +286,13 @@ static inline int cuda_load_functions(CudaFunctions **functions, void *logctx)
     LOAD_SYMBOL(cuGraphicsMapResources, tcuGraphicsMapResources, "cuGraphicsMapResources");
     LOAD_SYMBOL(cuGraphicsUnmapResources, tcuGraphicsUnmapResources, "cuGraphicsUnmapResources");
     LOAD_SYMBOL(cuGraphicsSubResourceGetMappedArray, tcuGraphicsSubResourceGetMappedArray, "cuGraphicsSubResourceGetMappedArray");
+
+    LOAD_SYMBOL(cuGLRegisterBufferObject, tcuGLRegisterBufferObject, "cuGLRegisterBufferObject");
+    LOAD_SYMBOL(cuGLUnregisterBufferObject, tcuGLUnregisterBufferObject, "cuGLUnregisterBufferObject");
+    LOAD_SYMBOL(cuGLMapBufferObject, tcuGLMapBufferObject, "cuGLMapBufferObject");
+    LOAD_SYMBOL(cuGLMapBufferObjectAsync, tcuGLMapBufferObjectAsync, "cuGLMapBufferObjectAsync");
+    LOAD_SYMBOL(cuGLUnmapBufferObject, tcuGLUnmapBufferObject, "cuGLUnmapBufferObject");
+    LOAD_SYMBOL(cuGLUnmapBufferObjectAsync, tcuGLUnmapBufferObjectAsync, "cuGLUnmapBufferObjectAsync");
 
     LOAD_SYMBOL(cuModuleLoadDataEx, tcuModuleLoadDataEx, "cuModuleLoadDataEx");
     LOAD_SYMBOL(cuModuleUnload, tcuModuleUnload, "cuModuleUnload");
