@@ -79,6 +79,8 @@
 # define FFNV_DEBUG_LOG_FUNC(logctx, msg, ...)
 #endif
 
+#define STRINGIFY(X) #X
+
 #define LOAD_LIBRARY(l, path)                                  \
     do {                                                       \
         if (!((l) = FFNV_LOAD_FUNC(path))) {                   \
