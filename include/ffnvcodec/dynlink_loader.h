@@ -108,6 +108,23 @@
         }                                                                     \
     } while (0)
 
+#define GET_PROC_EX(name, alias, required)              \
+    if (required)                                       \
+        LOAD_SYMBOL(alias, t##name, #name);              \
+    else                                                \
+        LOAD_SYMBOL(alias, t##name, #name);
+
+#define GET_PROC_EX_V2(name, alias, required)                           \
+    if (required)                                                       \
+        LOAD_SYMBOL(alias, t##name##_v2, STRINGIFY(name##_v2));              \
+    else                                                                \
+        LOAD_SYMBOL(alias, t##name##_v2, STRINGIFY(name##_v2));
+
+#define GET_PROC_REQUIRED(name) GET_PROC_EX(name,name,1)
+#define GET_PROC_OPTIONAL(name) GET_PROC_EX(name,name,0)
+#define GET_PROC(name)          GET_PROC_REQUIRED(name)
+#define GET_PROC_V2(name)       GET_PROC_EX_V2(name,name,1)
+
 #define GENERIC_LOAD_FUNC_PREAMBLE(T, n, N)     \
     T *f;                                       \
     int ret;                                    \
@@ -174,19 +191,33 @@ typedef struct CudaFunctions {
     tcuModuleLoadDataEx *cuModuleLoadDataEx;
     tcuModuleUnload *cuModuleUnload;
     tcuModuleGetFunction *cuModuleGetFunction;
-    tcuModuleGetGlobal *cuModuleGetGlobal;
+    tcuModuleGetGlobal_v2 *cuModuleGetGlobal;
     tcuModuleGetTexRef *cuModuleGetTexRef;
     tcuLaunchKernel *cuLaunchKernel;
-
+    //following are deprecated
     tcuGLRegisterBufferObject *cuGLRegisterBufferObject;
     tcuGLUnregisterBufferObject *cuGLUnregisterBufferObject;
-    tcuGLMapBufferObject *cuGLMapBufferObject;
+    tcuGLMapBufferObject_v2 *cuGLMapBufferObject;
     tcuGLMapBufferObjectAsync *cuGLMapBufferObjectAsync;
     tcuGLUnmapBufferObject *cuGLUnmapBufferObject;
     tcuGLUnmapBufferObjectAsync *cuGLUnmapBufferObjectAsync;
+    //end of deprecated
 
     tcuTexRefSetArray *cuTexRefSetArray;
     tcuTexRefSetFilterMode *cuTexRefSetFilterMode;
+
+    //more setting fore texref
+    tcuTexRefSetAddressMode *cuTexRefSetAddressMode;
+    tcuTexRefSetFlags *cuTexRefSetFlags;
+
+    //graphic buffer related
+    tcuTexRefSetAddress_v2 *cuTexRefSetAddress;
+    tcuTexRefSetAddress2D_v2 *cuTexRefSetAddress2D;
+    tcuGraphicsGLRegisterBuffer *cuGraphicsGLRegisterBuffer;
+    tcuGraphicsResourceGetMappedPointer_v2 *cuGraphicsResourceGetMappedPointer;
+
+    //more driver info
+    tcuDeviceGetAttribute *cuDeviceGetAttribute;
 
     FFNV_LIB_HANDLE lib;
 } CudaFunctions;
@@ -289,8 +320,8 @@ static inline int cuda_load_functions(CudaFunctions **functions, void *logctx)
 
     LOAD_SYMBOL(cuGLRegisterBufferObject, tcuGLRegisterBufferObject, "cuGLRegisterBufferObject");
     LOAD_SYMBOL(cuGLUnregisterBufferObject, tcuGLUnregisterBufferObject, "cuGLUnregisterBufferObject");
-    LOAD_SYMBOL(cuGLMapBufferObject, tcuGLMapBufferObject, "cuGLMapBufferObject");
-    LOAD_SYMBOL(cuGLMapBufferObjectAsync, tcuGLMapBufferObjectAsync, "cuGLMapBufferObjectAsync");
+    LOAD_SYMBOL(cuGLMapBufferObject, tcuGLMapBufferObject_v2, "cuGLMapBufferObject_v2");
+    LOAD_SYMBOL(cuGLMapBufferObjectAsync, tcuGLMapBufferObjectAsync_v2, "cuGLMapBufferObjectAsync");
     LOAD_SYMBOL(cuGLUnmapBufferObject, tcuGLUnmapBufferObject, "cuGLUnmapBufferObject");
     LOAD_SYMBOL(cuGLUnmapBufferObjectAsync, tcuGLUnmapBufferObjectAsync, "cuGLUnmapBufferObjectAsync");
 
@@ -303,6 +334,19 @@ static inline int cuda_load_functions(CudaFunctions **functions, void *logctx)
 
     LOAD_SYMBOL(cuTexRefSetArray, tcuTexRefSetArray, "cuTexRefSetArray");
     LOAD_SYMBOL(cuTexRefSetFilterMode, tcuTexRefSetFilterMode, "cuTexRefSetFilterMode");
+
+    //more setting fore texref
+    GET_PROC(cuTexRefSetAddressMode);
+    GET_PROC(cuTexRefSetFlags);
+
+    //graphic buffer related
+    GET_PROC_V2(cuTexRefSetAddress);
+    GET_PROC_V2(cuTexRefSetAddress2D);
+    GET_PROC(cuGraphicsGLRegisterBuffer);
+    GET_PROC_V2(cuGraphicsResourceGetMappedPointer);
+
+    //more driver info
+    GET_PROC(cuDeviceGetAttribute);
 
     GENERIC_LOAD_FUNC_FINALE(cuda);
 }

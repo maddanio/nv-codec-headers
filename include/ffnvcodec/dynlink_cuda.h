@@ -184,6 +184,8 @@ typedef CUresult CUDAAPI tcuGLRegisterBufferObject(GLuint buffer);
 typedef CUresult CUDAAPI tcuGLUnregisterBufferObject(GLuint buffer);
 typedef CUresult CUDAAPI tcuGLMapBufferObject(CUdeviceptr* dptr, size_t* size, GLuint buffer);
 typedef CUresult CUDAAPI tcuGLMapBufferObjectAsync(CUdeviceptr* dptr, size_t* size, GLuint buffer, CUstream hStream);
+typedef CUresult CUDAAPI tcuGLMapBufferObject_v2(CUdeviceptr *dptr, size_t *size,  GLuint buffer);
+typedef CUresult CUDAAPI tcuGLMapBufferObjectAsync_v2(CUdeviceptr *dptr, size_t *size,  GLuint buffer, CUstream hStream);
 typedef CUresult CUDAAPI tcuGLUnmapBufferObject(GLuint buffer);
 typedef CUresult CUDAAPI tcuGLUnmapBufferObjectAsync(GLuint buffer, CUstream hStream);
 
@@ -196,4 +198,18 @@ typedef CUresult CUDAAPI tcuLaunchKernel(CUfunction f, unsigned int  gridDimX, u
 
 typedef CUresult CUDAAPI tcuTexRefSetArray(CUtexref hTexRef, CUarray hArray, unsigned int Flags);
 typedef CUresult CUDAAPI tcuTexRefSetFilterMode(CUtexref hTexRef, CUfilter_mode fm);
+
+//more setting fore texref
+typedef CUresult  CUDAAPI tcuTexRefSetAddressMode(CUtexref hTexRef, int dim, CUaddress_mode am);
+typedef CUresult  CUDAAPI tcuTexRefSetFlags(CUtexref hTexRef, unsigned int Flags);
+
+//graphic buffer related
+typedef CUresult  CUDAAPI tcuTexRefSetAddress_v2(size_t *ByteOffset, CUtexref hTexRef, CUdeviceptr dptr, size_t bytes);
+typedef CUresult  CUDAAPI tcuTexRefSetAddress2D_v2(CUtexref hTexRef, const CUDA_ARRAY_DESCRIPTOR *desc, CUdeviceptr dptr, size_t Pitch);
+typedef CUresult CUDAAPI tcuGraphicsGLRegisterBuffer(CUgraphicsResource *pCudaResource, GLuint buffer, unsigned int Flags);
+typedef CUresult CUDAAPI tcuGraphicsResourceGetMappedPointer_v2(CUdeviceptr *pDevPtr, size_t *pSize, CUgraphicsResource resource);
+
+//more driver info
+typedef CUresult  CUDAAPI tcuDeviceGetAttribute(int *pi, CUdevice_attribute attrib, CUdevice dev);
+
 #endif
