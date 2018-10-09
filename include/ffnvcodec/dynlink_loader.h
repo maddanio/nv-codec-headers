@@ -200,7 +200,7 @@ typedef struct CudaFunctions {
     tcuGLRegisterBufferObject *cuGLRegisterBufferObject;
     tcuGLUnregisterBufferObject *cuGLUnregisterBufferObject;
     tcuGLMapBufferObject_v2 *cuGLMapBufferObject;
-    tcuGLMapBufferObjectAsync *cuGLMapBufferObjectAsync;
+    tcuGLMapBufferObjectAsync_v2 *cuGLMapBufferObjectAsync;
     tcuGLUnmapBufferObject *cuGLUnmapBufferObject;
     tcuGLUnmapBufferObjectAsync *cuGLUnmapBufferObjectAsync;
     //end of deprecated
@@ -323,7 +323,7 @@ static inline int cuda_load_functions(CudaFunctions **functions, void *logctx)
     LOAD_SYMBOL(cuGLRegisterBufferObject, tcuGLRegisterBufferObject, "cuGLRegisterBufferObject");
     LOAD_SYMBOL(cuGLUnregisterBufferObject, tcuGLUnregisterBufferObject, "cuGLUnregisterBufferObject");
     LOAD_SYMBOL(cuGLMapBufferObject, tcuGLMapBufferObject_v2, "cuGLMapBufferObject_v2");
-    LOAD_SYMBOL(cuGLMapBufferObjectAsync, tcuGLMapBufferObjectAsync_v2, "cuGLMapBufferObjectAsync");
+    LOAD_SYMBOL(cuGLMapBufferObjectAsync, tcuGLMapBufferObjectAsync_v2, "cuGLMapBufferObjectAsync_v2");
     LOAD_SYMBOL(cuGLUnmapBufferObject, tcuGLUnmapBufferObject, "cuGLUnmapBufferObject");
     LOAD_SYMBOL(cuGLUnmapBufferObjectAsync, tcuGLUnmapBufferObjectAsync, "cuGLUnmapBufferObjectAsync");
 
