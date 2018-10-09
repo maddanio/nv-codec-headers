@@ -1,1 +1,4 @@
 ffnvcodec.pc
+CMakeLists.txt
+.idea
+cmake-build*
