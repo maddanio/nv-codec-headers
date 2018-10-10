@@ -149,6 +149,20 @@ typedef enum CUaddress_mode_enum {
 } CUaddress_mode;
 
 /**
+ * Array formats
+ */
+typedef enum CUarray_format_enum {
+    CU_AD_FORMAT_UNSIGNED_INT8  = 0x01, /**< Unsigned 8-bit integers */
+    CU_AD_FORMAT_UNSIGNED_INT16 = 0x02, /**< Unsigned 16-bit integers */
+    CU_AD_FORMAT_UNSIGNED_INT32 = 0x03, /**< Unsigned 32-bit integers */
+    CU_AD_FORMAT_SIGNED_INT8    = 0x08, /**< Signed 8-bit integers */
+    CU_AD_FORMAT_SIGNED_INT16   = 0x09, /**< Signed 16-bit integers */
+    CU_AD_FORMAT_SIGNED_INT32   = 0x0a, /**< Signed 32-bit integers */
+    CU_AD_FORMAT_HALF           = 0x10, /**< 16-bit floating point */
+    CU_AD_FORMAT_FLOAT          = 0x20  /**< 32-bit floating point */
+} CUarray_format;
+
+/**
  * Array descriptor
  */
 typedef struct CUDA_ARRAY_DESCRIPTOR_st
