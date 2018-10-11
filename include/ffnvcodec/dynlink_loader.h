@@ -285,57 +285,57 @@ static inline int cuda_load_functions(CudaFunctions **functions, void *logctx)
 {
     GENERIC_LOAD_FUNC_PREAMBLE(CudaFunctions, cuda, CUDA_LIBNAME);
 
-    LOAD_SYMBOL(cuInit, tcuInit, "cuInit");
-    LOAD_SYMBOL(cuDeviceGetCount, tcuDeviceGetCount, "cuDeviceGetCount");
-    LOAD_SYMBOL(cuDeviceGet, tcuDeviceGet, "cuDeviceGet");
-    LOAD_SYMBOL(cuDeviceGetName, tcuDeviceGetName, "cuDeviceGetName");
-    LOAD_SYMBOL(cuDeviceComputeCapability, tcuDeviceComputeCapability, "cuDeviceComputeCapability");
-    LOAD_SYMBOL(cuCtxCreate, tcuCtxCreate_v2, "cuCtxCreate_v2");
-    LOAD_SYMBOL(cuCtxSetLimit, tcuCtxSetLimit, "cuCtxSetLimit");
-    LOAD_SYMBOL(cuCtxPushCurrent, tcuCtxPushCurrent_v2, "cuCtxPushCurrent_v2");
-    LOAD_SYMBOL(cuCtxPopCurrent, tcuCtxPopCurrent_v2, "cuCtxPopCurrent_v2");
-    LOAD_SYMBOL(cuCtxDestroy, tcuCtxDestroy_v2, "cuCtxDestroy_v2");
-    LOAD_SYMBOL(cuMemAlloc, tcuMemAlloc_v2, "cuMemAlloc_v2");
-    LOAD_SYMBOL(cuMemFree, tcuMemFree_v2, "cuMemFree_v2");
-    LOAD_SYMBOL(cuMemcpy2D, tcuMemcpy2D_v2, "cuMemcpy2D_v2");
-    LOAD_SYMBOL(cuMemcpy2DAsync, tcuMemcpy2DAsync_v2, "cuMemcpy2DAsync_v2");
-    LOAD_SYMBOL(cuGetErrorName, tcuGetErrorName, "cuGetErrorName");
-    LOAD_SYMBOL(cuGetErrorString, tcuGetErrorString, "cuGetErrorString");
+    GET_PROC(cuInit);
+    GET_PROC(cuDeviceGetCount);
+    GET_PROC(cuDeviceGet);
+    GET_PROC(cuDeviceGetName);
+    GET_PROC(cuDeviceComputeCapability);
+    GET_PROC_V2(cuCtxCreate);
+    GET_PROC(cuCtxSetLimit);
+    GET_PROC_V2(cuCtxPushCurrent);
+    GET_PROC_V2(cuCtxPopCurrent);
+    GET_PROC_V2(cuCtxDestroy);
+    GET_PROC_V2(cuMemAlloc);
+    GET_PROC_V2(cuMemFree);
+    GET_PROC_V2(cuMemcpy2D);
+    GET_PROC_V2(cuMemcpy2DAsync);
+    GET_PROC(cuGetErrorName);
+    GET_PROC(cuGetErrorString);
 
-    LOAD_SYMBOL(cuStreamCreate, tcuStreamCreate, "cuStreamCreate");
-    LOAD_SYMBOL(cuStreamQuery, tcuStreamQuery, "cuStreamQuery");
-    LOAD_SYMBOL(cuStreamSynchronize, tcuStreamSynchronize, "cuStreamSynchronize");
-    LOAD_SYMBOL(cuStreamDestroy, tcuStreamDestroy_v2, "cuStreamDestroy_v2");
-    LOAD_SYMBOL(cuStreamAddCallback, tcuStreamAddCallback, "cuStreamAddCallback");
-    LOAD_SYMBOL(cuEventCreate, tcuEventCreate, "cuEventCreate");
-    LOAD_SYMBOL(cuEventDestroy, tcuEventDestroy_v2, "cuEventDestroy_v2");
-    LOAD_SYMBOL(cuEventSynchronize, tcuEventSynchronize, "cuEventSynchronize");
-    LOAD_SYMBOL(cuEventQuery, tcuEventQuery, "cuEventQuery");
-    LOAD_SYMBOL(cuEventRecord, tcuEventRecord, "cuEventRecord");
+    GET_PROC(cuStreamCreate);
+    GET_PROC(cuStreamQuery);
+    GET_PROC(cuStreamSynchronize);
+    GET_PROC_V2(cuStreamDestroy);
+    GET_PROC(cuStreamAddCallback);
+    GET_PROC(cuEventCreate);
+    GET_PROC_V2(cuEventDestroy);
+    GET_PROC(cuEventSynchronize);
+    GET_PROC(cuEventQuery);
+    GET_PROC(cuEventRecord);
 
-    LOAD_SYMBOL(cuGLGetDevices, tcuGLGetDevices_v2, "cuGLGetDevices_v2");
-    LOAD_SYMBOL(cuGraphicsGLRegisterImage, tcuGraphicsGLRegisterImage, "cuGraphicsGLRegisterImage");
-    LOAD_SYMBOL(cuGraphicsUnregisterResource, tcuGraphicsUnregisterResource, "cuGraphicsUnregisterResource");
-    LOAD_SYMBOL(cuGraphicsMapResources, tcuGraphicsMapResources, "cuGraphicsMapResources");
-    LOAD_SYMBOL(cuGraphicsUnmapResources, tcuGraphicsUnmapResources, "cuGraphicsUnmapResources");
-    LOAD_SYMBOL(cuGraphicsSubResourceGetMappedArray, tcuGraphicsSubResourceGetMappedArray, "cuGraphicsSubResourceGetMappedArray");
+    GET_PROC_V2(cuGLGetDevices);
+    GET_PROC(cuGraphicsGLRegisterImage);
+    GET_PROC(cuGraphicsUnregisterResource);
+    GET_PROC(cuGraphicsMapResources);
+    GET_PROC(cuGraphicsUnmapResources);
+    GET_PROC(cuGraphicsSubResourceGetMappedArray);
 
-    LOAD_SYMBOL(cuGLRegisterBufferObject, tcuGLRegisterBufferObject, "cuGLRegisterBufferObject");
-    LOAD_SYMBOL(cuGLUnregisterBufferObject, tcuGLUnregisterBufferObject, "cuGLUnregisterBufferObject");
-    LOAD_SYMBOL(cuGLMapBufferObject, tcuGLMapBufferObject_v2, "cuGLMapBufferObject_v2");
-    LOAD_SYMBOL(cuGLMapBufferObjectAsync, tcuGLMapBufferObjectAsync_v2, "cuGLMapBufferObjectAsync_v2");
-    LOAD_SYMBOL(cuGLUnmapBufferObject, tcuGLUnmapBufferObject, "cuGLUnmapBufferObject");
-    LOAD_SYMBOL(cuGLUnmapBufferObjectAsync, tcuGLUnmapBufferObjectAsync, "cuGLUnmapBufferObjectAsync");
+    GET_PROC(cuGLRegisterBufferObject);
+    GET_PROC(cuGLUnregisterBufferObject);
+    GET_PROC_V2(cuGLMapBufferObject);
+    GET_PROC_V2(cuGLMapBufferObjectAsync);
+    GET_PROC(cuGLUnmapBufferObject);
+    GET_PROC(cuGLUnmapBufferObjectAsync);
 
-    LOAD_SYMBOL(cuModuleLoadDataEx, tcuModuleLoadDataEx, "cuModuleLoadDataEx");
-    LOAD_SYMBOL(cuModuleUnload, tcuModuleUnload, "cuModuleUnload");
-    LOAD_SYMBOL(cuModuleGetFunction, tcuModuleGetFunction, "cuModuleGetFunction");
-    LOAD_SYMBOL(cuModuleGetGlobal, tcuModuleGetGlobal, "cuModuleGetGlobal");
-    LOAD_SYMBOL(cuModuleGetTexRef, tcuModuleGetTexRef, "cuModuleGetTexRef");
-    LOAD_SYMBOL(cuLaunchKernel, tcuLaunchKernel, "cuLaunchKernel");
+    GET_PROC(cuModuleLoadDataEx);
+    GET_PROC(cuModuleUnload);
+    GET_PROC(cuModuleGetFunction);
+    GET_PROC(cuModuleGetGlobal);
+    GET_PROC(cuModuleGetTexRef);
+    GET_PROC(cuLaunchKernel);
 
-    LOAD_SYMBOL(cuTexRefSetArray, tcuTexRefSetArray, "cuTexRefSetArray");
-    LOAD_SYMBOL(cuTexRefSetFilterMode, tcuTexRefSetFilterMode, "cuTexRefSetFilterMode");
+    GET_PROC(cuTexRefSetArray);
+    GET_PROC(cuTexRefSetFilterMode);
 
     //more setting fore texref
     GET_PROC(cuTexRefSetAddressMode);
@@ -358,32 +358,32 @@ static inline int cuvid_load_functions(CuvidFunctions **functions, void *logctx)
 {
     GENERIC_LOAD_FUNC_PREAMBLE(CuvidFunctions, cuvid, NVCUVID_LIBNAME);
 
-    LOAD_SYMBOL_OPT(cuvidGetDecoderCaps, tcuvidGetDecoderCaps, "cuvidGetDecoderCaps");
-    LOAD_SYMBOL(cuvidCreateDecoder, tcuvidCreateDecoder, "cuvidCreateDecoder");
-    LOAD_SYMBOL(cuvidDestroyDecoder, tcuvidDestroyDecoder, "cuvidDestroyDecoder");
-    LOAD_SYMBOL(cuvidDecodePicture, tcuvidDecodePicture, "cuvidDecodePicture");
+    GET_PROC_OPTIONAL(cuvidGetDecoderCaps);
+    GET_PROC(cuvidCreateDecoder);
+    GET_PROC(cuvidDestroyDecoder);
+    GET_PROC(cuvidDecodePicture);
 #ifdef __CUVID_DEVPTR64
     LOAD_SYMBOL(cuvidMapVideoFrame, tcuvidMapVideoFrame, "cuvidMapVideoFrame64");
     LOAD_SYMBOL(cuvidUnmapVideoFrame, tcuvidUnmapVideoFrame, "cuvidUnmapVideoFrame64");
 #else
-    LOAD_SYMBOL(cuvidMapVideoFrame, tcuvidMapVideoFrame, "cuvidMapVideoFrame");
-    LOAD_SYMBOL(cuvidUnmapVideoFrame, tcuvidUnmapVideoFrame, "cuvidUnmapVideoFrame");
+    GET_PROC(cuvidMapVideoFrame);
+    GET_PROC(cuvidUnmapVideoFrame);
 #endif
-    LOAD_SYMBOL(cuvidCtxLockCreate, tcuvidCtxLockCreate, "cuvidCtxLockCreate");
-    LOAD_SYMBOL(cuvidCtxLockDestroy, tcuvidCtxLockDestroy, "cuvidCtxLockDestroy");
-    LOAD_SYMBOL(cuvidCtxLock, tcuvidCtxLock, "cuvidCtxLock");
-    LOAD_SYMBOL(cuvidCtxUnlock, tcuvidCtxUnlock, "cuvidCtxUnlock");
+    GET_PROC(cuvidCtxLockCreate);
+    GET_PROC(cuvidCtxLockDestroy);
+    GET_PROC(cuvidCtxLock);
+    GET_PROC(cuvidCtxUnlock);
 
-    LOAD_SYMBOL(cuvidCreateVideoSource, tcuvidCreateVideoSource, "cuvidCreateVideoSource");
-    LOAD_SYMBOL(cuvidCreateVideoSourceW, tcuvidCreateVideoSourceW, "cuvidCreateVideoSourceW");
-    LOAD_SYMBOL(cuvidDestroyVideoSource, tcuvidDestroyVideoSource, "cuvidDestroyVideoSource");
-    LOAD_SYMBOL(cuvidSetVideoSourceState, tcuvidSetVideoSourceState, "cuvidSetVideoSourceState");
-    LOAD_SYMBOL(cuvidGetVideoSourceState, tcuvidGetVideoSourceState, "cuvidGetVideoSourceState");
-    LOAD_SYMBOL(cuvidGetSourceVideoFormat, tcuvidGetSourceVideoFormat, "cuvidGetSourceVideoFormat");
-    LOAD_SYMBOL(cuvidGetSourceAudioFormat, tcuvidGetSourceAudioFormat, "cuvidGetSourceAudioFormat");
-    LOAD_SYMBOL(cuvidCreateVideoParser, tcuvidCreateVideoParser, "cuvidCreateVideoParser");
-    LOAD_SYMBOL(cuvidParseVideoData, tcuvidParseVideoData, "cuvidParseVideoData");
-    LOAD_SYMBOL(cuvidDestroyVideoParser, tcuvidDestroyVideoParser, "cuvidDestroyVideoParser");
+    GET_PROC(cuvidCreateVideoSource);
+    GET_PROC(cuvidCreateVideoSourceW);
+    GET_PROC(cuvidDestroyVideoSource);
+    GET_PROC(cuvidSetVideoSourceState);
+    GET_PROC(cuvidGetVideoSourceState);
+    GET_PROC(cuvidGetSourceVideoFormat);
+    GET_PROC(cuvidGetSourceAudioFormat);
+    GET_PROC(cuvidCreateVideoParser);
+    GET_PROC(cuvidParseVideoData);
+    GET_PROC(cuvidDestroyVideoParser);
 
     GENERIC_LOAD_FUNC_FINALE(cuvid);
 }
@@ -392,8 +392,8 @@ static inline int nvenc_load_functions(NvencFunctions **functions, void *logctx)
 {
     GENERIC_LOAD_FUNC_PREAMBLE(NvencFunctions, nvenc, NVENC_LIBNAME);
 
-    LOAD_SYMBOL(NvEncodeAPICreateInstance, tNvEncodeAPICreateInstance, "NvEncodeAPICreateInstance");
-    LOAD_SYMBOL(NvEncodeAPIGetMaxSupportedVersion, tNvEncodeAPIGetMaxSupportedVersion, "NvEncodeAPIGetMaxSupportedVersion");
+    GET_PROC(NvEncodeAPICreateInstance);
+    GET_PROC(NvEncodeAPIGetMaxSupportedVersion);
 
     GENERIC_LOAD_FUNC_FINALE(nvenc);
 }
