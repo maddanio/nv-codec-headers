@@ -400,7 +400,15 @@ static inline int nvenc_load_functions(NvencFunctions **functions, void *logctx)
 
 #undef GENERIC_LOAD_FUNC_PREAMBLE
 #undef LOAD_LIBRARY
+#undef GET_PROC
+#undef GET_PROC_V2
+#undef GET_PROC_OPTIONAL
+#undef GET_PROC_REQUIRED
+#undef GET_PROC_EX
+#undef GET_PROC_EX_V2
+#undef STRINGIFY
 #undef LOAD_SYMBOL
+#undef LOAD_SYMBOL_OPT
 #undef GENERIC_LOAD_FUNC_FINALE
 #undef GENERIC_FREE_FUNC
 #undef CUDA_LIBNAME
