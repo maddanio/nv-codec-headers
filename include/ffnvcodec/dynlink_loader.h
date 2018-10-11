@@ -114,13 +114,13 @@
     if (required)                                       \
         LOAD_SYMBOL(alias, t##name, #name);              \
     else                                                \
-        LOAD_SYMBOL(alias, t##name, #name);
+        LOAD_SYMBOL_OPT(alias, t##name, #name);
 
 #define GET_PROC_EX_V2(name, alias, required)                           \
     if (required)                                                       \
         LOAD_SYMBOL(alias, t##name##_v2, STRINGIFY(name##_v2));              \
     else                                                                \
-        LOAD_SYMBOL(alias, t##name##_v2, STRINGIFY(name##_v2));
+        LOAD_SYMBOL_OPT(alias, t##name##_v2, STRINGIFY(name##_v2));
 
 #define GET_PROC_REQUIRED(name) GET_PROC_EX(name,name,1)
 #define GET_PROC_OPTIONAL(name) GET_PROC_EX(name,name,0)
