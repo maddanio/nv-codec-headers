@@ -339,7 +339,7 @@ typedef CUresult CUDAAPI tcuGLUnmapBufferObject(GLuint buffer);
 typedef CUresult CUDAAPI tcuGLUnmapBufferObjectAsync(GLuint buffer, CUstream hStream);
 
 typedef CUresult CUDAAPI tcuModuleLoadDataEx(CUmodule* module, const void* image, unsigned int numOptions, CUjit_option* options, void** optionValues);
-typedef CUresult CUDAAPI tcuModuleUnload(CUmodule* module);
+typedef CUresult CUDAAPI tcuModuleUnload(CUmodule module);
 typedef CUresult CUDAAPI tcuModuleGetFunction(CUfunction* hfunc, CUmodule hmod, const char* name);
 typedef CUresult CUDAAPI tcuModuleGetGlobal(CUdeviceptr* dptr, size_t* bytes, CUmodule hmod, const char* name);
 typedef CUresult CUDAAPI tcuModuleGetGlobal_v2(CUdeviceptr* dptr, size_t* bytes, CUmodule hmod, const char* name);
