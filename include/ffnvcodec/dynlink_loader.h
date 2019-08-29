@@ -63,7 +63,7 @@
 #if !defined(FFNV_LOAD_FUNC) || !defined(FFNV_SYM_FUNC)
 # ifdef _WIN32
 #  define FFNV_LOAD_FUNC(path) LoadLibrary(TEXT(path))
-#  define FFNV_SYM_FUNC(lib, sym) GetProcAddress((lib), TEXT(sym))
+#  define FFNV_SYM_FUNC(lib, sym) GetProcAddress((lib), (sym))
 #  define FFNV_FREE_FUNC(lib) FreeLibrary(lib)
 # else
 #  include <dlfcn.h>
@@ -158,7 +158,9 @@ typedef struct CudaFunctions {
     tcuInit *cuInit;
     tcuDeviceGetCount *cuDeviceGetCount;
     tcuDeviceGet *cuDeviceGet;
+    tcuDeviceGetAttribute *cuDeviceGetAttribute;
     tcuDeviceGetName *cuDeviceGetName;
+    tcuDeviceGetUuid *cuDeviceGetUuid;
     tcuDeviceComputeCapability *cuDeviceComputeCapability;
     tcuCtxCreate_v2 *cuCtxCreate;
     tcuCtxSetLimit *cuCtxSetLimit;
@@ -166,6 +168,8 @@ typedef struct CudaFunctions {
     tcuCtxPopCurrent_v2 *cuCtxPopCurrent;
     tcuCtxDestroy_v2 *cuCtxDestroy;
     tcuMemAlloc_v2 *cuMemAlloc;
+    tcuMemAllocPitch_v2 *cuMemAllocPitch;
+    tcuMemsetD8Async *cuMemsetD8Async;
     tcuMemFree_v2 *cuMemFree;
     tcuMemcpy2D_v2 *cuMemcpy2D;
     tcuMemcpy2DAsync_v2 *cuMemcpy2DAsync;
@@ -183,27 +187,22 @@ typedef struct CudaFunctions {
     tcuEventQuery *cuEventQuery;
     tcuEventRecord *cuEventRecord;
 
+    tcuLaunchKernel *cuLaunchKernel;
+    tcuModuleLoadData *cuModuleLoadData;
+    tcuModuleLoadDataEx *cuModuleLoadDataEx;
+    tcuModuleUnload *cuModuleUnload;
+    tcuModuleGetFunction *cuModuleGetFunction;
+    tcuModuleGetGlobal_v2 *cuModuleGetGlobal;
+    tcuTexObjectCreate *cuTexObjectCreate;
+    tcuTexObjectDestroy *cuTexObjectDestroy;
+    tcuModuleGetTexRef *cuModuleGetTexRef;
+
     tcuGLGetDevices_v2 *cuGLGetDevices;
     tcuGraphicsGLRegisterImage *cuGraphicsGLRegisterImage;
     tcuGraphicsUnregisterResource *cuGraphicsUnregisterResource;
     tcuGraphicsMapResources *cuGraphicsMapResources;
     tcuGraphicsUnmapResources *cuGraphicsUnmapResources;
     tcuGraphicsSubResourceGetMappedArray *cuGraphicsSubResourceGetMappedArray;
-
-    tcuModuleLoadDataEx *cuModuleLoadDataEx;
-    tcuModuleUnload *cuModuleUnload;
-    tcuModuleGetFunction *cuModuleGetFunction;
-    tcuModuleGetGlobal_v2 *cuModuleGetGlobal;
-    tcuModuleGetTexRef *cuModuleGetTexRef;
-    tcuLaunchKernel *cuLaunchKernel;
-    //following are deprecated
-    tcuGLRegisterBufferObject *cuGLRegisterBufferObject;
-    tcuGLUnregisterBufferObject *cuGLUnregisterBufferObject;
-    tcuGLMapBufferObject_v2 *cuGLMapBufferObject;
-    tcuGLMapBufferObjectAsync_v2 *cuGLMapBufferObjectAsync;
-    tcuGLUnmapBufferObject *cuGLUnmapBufferObject;
-    tcuGLUnmapBufferObjectAsync *cuGLUnmapBufferObjectAsync;
-    //end of deprecated
 
     tcuTexRefSetArray *cuTexRefSetArray;
     tcuTexRefSetFilterMode *cuTexRefSetFilterMode;
@@ -218,8 +217,18 @@ typedef struct CudaFunctions {
     tcuGraphicsGLRegisterBuffer *cuGraphicsGLRegisterBuffer;
     tcuGraphicsResourceGetMappedPointer_v2 *cuGraphicsResourceGetMappedPointer;
 
-    //more driver info
-    tcuDeviceGetAttribute *cuDeviceGetAttribute;
+    tcuImportExternalMemory *cuImportExternalMemory;
+    tcuDestroyExternalMemory *cuDestroyExternalMemory;
+    tcuExternalMemoryGetMappedBuffer *cuExternalMemoryGetMappedBuffer;
+    tcuExternalMemoryGetMappedMipmappedArray *cuExternalMemoryGetMappedMipmappedArray;
+    tcuMipmappedArrayDestroy *cuMipmappedArrayDestroy;
+
+    tcuMipmappedArrayGetLevel *cuMipmappedArrayGetLevel;
+
+    tcuImportExternalSemaphore *cuImportExternalSemaphore;
+    tcuDestroyExternalSemaphore *cuDestroyExternalSemaphore;
+    tcuSignalExternalSemaphoresAsync *cuSignalExternalSemaphoresAsync;
+    tcuWaitExternalSemaphoresAsync *cuWaitExternalSemaphoresAsync;
 
     FFNV_LIB_HANDLE lib;
 } CudaFunctions;
@@ -232,6 +241,8 @@ typedef struct CuvidFunctions {
     tcuvidCreateDecoder *cuvidCreateDecoder;
     tcuvidDestroyDecoder *cuvidDestroyDecoder;
     tcuvidDecodePicture *cuvidDecodePicture;
+    tcuvidGetDecodeStatus *cuvidGetDecodeStatus;
+    tcuvidReconfigureDecoder *cuvidReconfigureDecoder;
     tcuvidMapVideoFrame *cuvidMapVideoFrame;
     tcuvidUnmapVideoFrame *cuvidUnmapVideoFrame;
     tcuvidCtxLockCreate *cuvidCtxLockCreate;
@@ -301,6 +312,9 @@ static inline int cuda_load_functions(CudaFunctions **functions, void *logctx)
     GET_PROC_V2(cuMemcpy2DAsync);
     GET_PROC(cuGetErrorName);
     GET_PROC(cuGetErrorString);
+    GET_PROC(cuDeviceGetAttribute);
+    GET_PROC_V2(cuMemAllocPitch);
+    GET_PROC(cuMemsetD8Async);
 
     GET_PROC(cuStreamCreate);
     GET_PROC(cuStreamQuery);
@@ -320,19 +334,16 @@ static inline int cuda_load_functions(CudaFunctions **functions, void *logctx)
     GET_PROC(cuGraphicsUnmapResources);
     GET_PROC(cuGraphicsSubResourceGetMappedArray);
 
-    GET_PROC(cuGLRegisterBufferObject);
-    GET_PROC(cuGLUnregisterBufferObject);
-    GET_PROC_V2(cuGLMapBufferObject);
-    GET_PROC_V2(cuGLMapBufferObjectAsync);
-    GET_PROC(cuGLUnmapBufferObject);
-    GET_PROC(cuGLUnmapBufferObjectAsync);
-
+    GET_PROC(cuModuleLoadData);
     GET_PROC(cuModuleLoadDataEx);
     GET_PROC(cuModuleUnload);
     GET_PROC(cuModuleGetFunction);
     GET_PROC(cuModuleGetGlobal);
     GET_PROC(cuModuleGetTexRef);
     GET_PROC(cuLaunchKernel);
+
+    GET_PROC(cuTexObjectCreate);
+    GET_PROC(cuTexObjectDestroy);
 
     GET_PROC(cuTexRefSetArray);
     GET_PROC(cuTexRefSetFilterMode);
@@ -350,6 +361,19 @@ static inline int cuda_load_functions(CudaFunctions **functions, void *logctx)
     //more driver info
     GET_PROC(cuDeviceGetAttribute);
 
+    GET_PROC_OPTIONAL(cuDeviceGetUuid);
+    GET_PROC_OPTIONAL(cuImportExternalMemory);
+    GET_PROC_OPTIONAL(cuDestroyExternalMemory);
+    GET_PROC_OPTIONAL(cuExternalMemoryGetMappedBuffer);
+    GET_PROC_OPTIONAL(cuExternalMemoryGetMappedMipmappedArray);
+    GET_PROC_OPTIONAL(cuMipmappedArrayGetLevel);
+    GET_PROC_OPTIONAL(cuMipmappedArrayDestroy);
+
+    GET_PROC_OPTIONAL(cuImportExternalSemaphore);
+    GET_PROC_OPTIONAL(cuDestroyExternalSemaphore);
+    GET_PROC_OPTIONAL(cuSignalExternalSemaphoresAsync);
+    GET_PROC_OPTIONAL(cuWaitExternalSemaphoresAsync);
+
     GENERIC_LOAD_FUNC_FINALE(cuda);
 }
 #endif
@@ -362,6 +386,8 @@ static inline int cuvid_load_functions(CuvidFunctions **functions, void *logctx)
     GET_PROC(cuvidCreateDecoder);
     GET_PROC(cuvidDestroyDecoder);
     GET_PROC(cuvidDecodePicture);
+    GET_PROC(cuvidGetDecodeStatus);
+    GET_PROC(cuvidReconfigureDecoder);
 #ifdef __CUVID_DEVPTR64
     LOAD_SYMBOL(cuvidMapVideoFrame, tcuvidMapVideoFrame, "cuvidMapVideoFrame64");
     LOAD_SYMBOL(cuvidUnmapVideoFrame, tcuvidUnmapVideoFrame, "cuvidUnmapVideoFrame64");
