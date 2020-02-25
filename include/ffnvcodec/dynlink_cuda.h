@@ -353,60 +353,14 @@ typedef struct CUDA_EXTERNAL_MEMORY_MIPMAPPED_ARRAY_DESC_st {
 #define CU_TRSA_OVERRIDE_FORMAT 1
 #define CU_TRSF_READ_AS_INTEGER 1
 
-/**
- * If set, the CUDA array is a collection of layers, where each layer is either a 1D
- * or a 2D array and the Depth member of CUDA_ARRAY3D_DESCRIPTOR specifies the number
- * of layers, not the depth of a 3D array.
- */
 #define CUDA_ARRAY3D_LAYERED        0x01
-
-/**
- * Deprecated, use CUDA_ARRAY3D_LAYERED
- */
 #define CUDA_ARRAY3D_2DARRAY        0x01
-
-/**
- * This flag must be set in order to bind a surface reference
- * to the CUDA array
- */
 #define CUDA_ARRAY3D_SURFACE_LDST   0x02
-
-/**
- * If set, the CUDA array is a collection of six 2D arrays, representing faces of a cube. The
- * width of such a CUDA array must be equal to its height, and Depth must be six.
- * If ::CUDA_ARRAY3D_LAYERED flag is also set, then the CUDA array is a collection of cubemaps
- * and Depth must be a multiple of six.
- */
 #define CUDA_ARRAY3D_CUBEMAP        0x04
-
-/**
- * This flag must be set in order to perform texture gather operations
- * on a CUDA array.
- */
 #define CUDA_ARRAY3D_TEXTURE_GATHER 0x08
-
-/**
- * This flag if set indicates that the CUDA
- * array is a DEPTH_TEXTURE.
- */
 #define CUDA_ARRAY3D_DEPTH_TEXTURE 0x10
-
-/**
- * This flag indicates that the CUDA array may be bound as a color target
- * in an external graphics API
- */
 #define CUDA_ARRAY3D_COLOR_ATTACHMENT 0x20
-
-/**
- * Use normalized texture coordinates in the range [0,1) instead of [0,dim).
- * Flag for ::cuTexRefSetFlags()
- */
 #define CU_TRSF_NORMALIZED_COORDINATES  0x02
-
-/**
- * Perform sRGB->linear conversion during texture read.
- * Flag for ::cuTexRefSetFlags()
- */
 #define CU_TRSF_SRGB  0x10
 
 typedef void CUDAAPI CUstreamCallback(CUstream hStream, CUresult status, void *userdata);
@@ -476,46 +430,7 @@ typedef CUresult  CUDAAPI tcuTexRefSetAddress2D_v2(CUtexref hTexRef, const CUDA_
 //cuda surface
 
 typedef CUresult  CUDAAPI tcuSurfObjectCreate(CUsurfObject *pSurfObject, const CUDA_RESOURCE_DESC *pResDesc);
-
-/**
- * \brief Destroys a surface object
- *
- * Destroys the surface object specified by \p surfObject.
- *
- * \param surfObject - Surface object to destroy
- *
- * \return
- * ::CUDA_SUCCESS,
- * ::CUDA_ERROR_DEINITIALIZED,
- * ::CUDA_ERROR_NOT_INITIALIZED,
- * ::CUDA_ERROR_INVALID_CONTEXT,
- * ::CUDA_ERROR_INVALID_VALUE
- *
- * \sa
- * ::cuSurfObjectCreate,
- * ::cudaDestroySurfaceObject
- */
 typedef CUresult  CUDAAPI tcuSurfObjectDestroy(CUsurfObject surfObject);
-
-/**
- * \brief Returns a surface object's resource descriptor
- *
- * Returns the resource descriptor for the surface object specified by \p surfObject.
- *
- * \param pResDesc   - Resource descriptor
- * \param surfObject - Surface object
- *
- * \return
- * ::CUDA_SUCCESS,
- * ::CUDA_ERROR_DEINITIALIZED,
- * ::CUDA_ERROR_NOT_INITIALIZED,
- * ::CUDA_ERROR_INVALID_CONTEXT,
- * ::CUDA_ERROR_INVALID_VALUE
- *
- * \sa
- * ::cuSurfObjectCreate,
- * ::cudaGetSurfaceObjectResourceDesc
- */
 typedef CUresult  CUDAAPI tcuSurfObjectGetResourceDesc(CUDA_RESOURCE_DESC *pResDesc, CUsurfObject surfObject);
 
 //more driver info
