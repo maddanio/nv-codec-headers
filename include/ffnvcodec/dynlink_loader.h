@@ -313,6 +313,9 @@ static inline int cuda_load_functions(CudaFunctions **functions, void *logctx)
     GET_PROC(cuCtxSetLimit);
     GET_PROC_V2(cuCtxPushCurrent);
     GET_PROC_V2(cuCtxPopCurrent);
+    GET_PROC(cuCtxGetApiVersion);
+    GET_PROC(cuCtxGetCurrent);
+    GET_PROC(cuCtxGetDevice);
     GET_PROC_V2(cuCtxDestroy);
     GET_PROC_V2(cuMemAlloc);
     GET_PROC_V2(cuMemFree);
@@ -365,7 +368,10 @@ static inline int cuda_load_functions(CudaFunctions **functions, void *logctx)
     GET_PROC_V2(cuTexRefSetAddress2D);
     GET_PROC(cuGraphicsGLRegisterBuffer);
     GET_PROC_V2(cuGraphicsResourceGetMappedPointer);
-
+    //cuda surface
+    GET_PROC(cuSurfObjectCreate);
+    GET_PROC(cuSurfObjectDestroy);
+    GET_PROC(cuSurfObjectGetResourceDesc);
     //more driver info
     GET_PROC(cuDeviceGetAttribute);
 
