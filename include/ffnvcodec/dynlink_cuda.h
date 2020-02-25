@@ -53,6 +53,7 @@ typedef void* CUmipmappedArray;
 typedef void* CUgraphicsResource;
 typedef void* CUexternalMemory;
 typedef void* CUexternalSemaphore;
+typedef void* CUsurfObject;
 #if defined(__x86_64) || defined(AMD64) || defined(_M_AMD64) || defined(__LP64__)
 typedef unsigned long long CUdeviceptr;
 #else
@@ -155,6 +156,16 @@ typedef enum CUexternalSemaphoreHandleType_enum {
     CU_EXTERNAL_SEMAPHORE_HANDLE_TYPE_OPAQUE_WIN32_KMT = 3,
     CU_EXTERNAL_SEMAPHORE_HANDLE_TYPE_D3D12_FENCE      = 4
 } CUexternalSemaphoreHandleType;
+
+
+/**
+ * Compute Modes
+ */
+typedef enum CUcomputemode_enum {
+    CU_COMPUTEMODE_DEFAULT           = 0, /**< Default compute mode (Multiple contexts allowed per device) */
+    CU_COMPUTEMODE_PROHIBITED        = 2, /**< Compute-prohibited mode (No contexts can be created on this device at this time) */
+    CU_COMPUTEMODE_EXCLUSIVE_PROCESS = 3  /**< Compute-exclusive-process mode (Only one context used by a single process can be present on this device at a time) */
+} CUcomputemode;
 
 #ifndef CU_UUID_HAS_BEEN_DEFINED
 #define CU_UUID_HAS_BEEN_DEFINED
@@ -342,6 +353,16 @@ typedef struct CUDA_EXTERNAL_MEMORY_MIPMAPPED_ARRAY_DESC_st {
 #define CU_TRSA_OVERRIDE_FORMAT 1
 #define CU_TRSF_READ_AS_INTEGER 1
 
+#define CUDA_ARRAY3D_LAYERED        0x01
+#define CUDA_ARRAY3D_2DARRAY        0x01
+#define CUDA_ARRAY3D_SURFACE_LDST   0x02
+#define CUDA_ARRAY3D_CUBEMAP        0x04
+#define CUDA_ARRAY3D_TEXTURE_GATHER 0x08
+#define CUDA_ARRAY3D_DEPTH_TEXTURE 0x10
+#define CUDA_ARRAY3D_COLOR_ATTACHMENT 0x20
+#define CU_TRSF_NORMALIZED_COORDINATES  0x02
+#define CU_TRSF_SRGB  0x10
+
 typedef void CUDAAPI CUstreamCallback(CUstream hStream, CUresult status, void *userdata);
 
 typedef CUresult CUDAAPI tcuInit(unsigned int Flags);
@@ -355,6 +376,9 @@ typedef CUresult CUDAAPI tcuCtxCreate_v2(CUcontext *pctx, unsigned int flags, CU
 typedef CUresult CUDAAPI tcuCtxSetLimit(CUlimit limit, size_t value);
 typedef CUresult CUDAAPI tcuCtxPushCurrent_v2(CUcontext pctx);
 typedef CUresult CUDAAPI tcuCtxPopCurrent_v2(CUcontext *pctx);
+typedef CUresult CUDAAPI tcuCtxGetApiVersion(CUcontext ctx, unsigned int *version);
+typedef CUresult CUDAAPI tcuCtxGetCurrent(CUcontext *pctx);
+typedef CUresult CUDAAPI tcuCtxGetDevice(CUdevice *device);
 typedef CUresult CUDAAPI tcuCtxDestroy_v2(CUcontext ctx);
 typedef CUresult CUDAAPI tcuMemAlloc_v2(CUdeviceptr *dptr, size_t bytesize);
 typedef CUresult CUDAAPI tcuMemAllocPitch_v2(CUdeviceptr *dptr, size_t *pPitch, size_t WidthInBytes, size_t Height, unsigned int ElementSizeBytes);
@@ -402,6 +426,12 @@ typedef CUresult  CUDAAPI tcuTexRefSetAddressMode(CUtexref hTexRef, int dim, CUa
 typedef CUresult  CUDAAPI tcuTexRefSetFlags(CUtexref hTexRef, unsigned int Flags);
 typedef CUresult  CUDAAPI tcuTexRefSetAddress_v2(size_t *ByteOffset, CUtexref hTexRef, CUdeviceptr dptr, size_t bytes);
 typedef CUresult  CUDAAPI tcuTexRefSetAddress2D_v2(CUtexref hTexRef, const CUDA_ARRAY_DESCRIPTOR *desc, CUdeviceptr dptr, size_t Pitch);
+
+//cuda surface
+
+typedef CUresult  CUDAAPI tcuSurfObjectCreate(CUsurfObject *pSurfObject, const CUDA_RESOURCE_DESC *pResDesc);
+typedef CUresult  CUDAAPI tcuSurfObjectDestroy(CUsurfObject surfObject);
+typedef CUresult  CUDAAPI tcuSurfObjectGetResourceDesc(CUDA_RESOURCE_DESC *pResDesc, CUsurfObject surfObject);
 
 //more driver info
 typedef CUresult  CUDAAPI tcuDeviceGetAttribute(int *pi, CUdevice_attribute attrib, CUdevice dev);

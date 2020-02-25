@@ -166,6 +166,9 @@ typedef struct CudaFunctions {
     tcuCtxSetLimit *cuCtxSetLimit;
     tcuCtxPushCurrent_v2 *cuCtxPushCurrent;
     tcuCtxPopCurrent_v2 *cuCtxPopCurrent;
+    tcuCtxGetApiVersion *cuCtxGetApiVersion;
+    tcuCtxGetCurrent *cuCtxGetCurrent;
+    tcuCtxGetDevice *cuCtxGetDevice;
     tcuCtxDestroy_v2 *cuCtxDestroy;
     tcuMemAlloc_v2 *cuMemAlloc;
     tcuMemAllocPitch_v2 *cuMemAllocPitch;
@@ -229,6 +232,11 @@ typedef struct CudaFunctions {
     tcuDestroyExternalSemaphore *cuDestroyExternalSemaphore;
     tcuSignalExternalSemaphoresAsync *cuSignalExternalSemaphoresAsync;
     tcuWaitExternalSemaphoresAsync *cuWaitExternalSemaphoresAsync;
+
+    //cuda surface
+    tcuSurfObjectCreate *cuSurfObjectCreate;
+    tcuSurfObjectDestroy *cuSurfObjectDestroy;
+    tcuSurfObjectGetResourceDesc *cuSurfObjectGetResourceDesc;
 
     FFNV_LIB_HANDLE lib;
 } CudaFunctions;
