@@ -433,6 +433,11 @@ typedef CUresult  CUDAAPI tcuSurfObjectCreate(CUsurfObject *pSurfObject, const C
 typedef CUresult  CUDAAPI tcuSurfObjectDestroy(CUsurfObject surfObject);
 typedef CUresult  CUDAAPI tcuSurfObjectGetResourceDesc(CUDA_RESOURCE_DESC *pResDesc, CUsurfObject surfObject);
 
+//cuda array
+typedef CUresult  CUDAAPI tcuArrayGetDescriptor(CUDA_ARRAY_DESCRIPTOR *pArrayDescriptor, CUarray hArray);
+typedef CUresult  CUDAAPI tcuArrayDestroy(CUarray hArray);
+typedef CUresult  CUDAAPI tcuArray3DGetDescriptor(CUDA_ARRAY3D_DESCRIPTOR *pArrayDescriptor, CUarray hArray);
+
 //more driver info
 typedef CUresult  CUDAAPI tcuDeviceGetAttribute(int *pi, CUdevice_attribute attrib, CUdevice dev);
 
