@@ -401,6 +401,7 @@ typedef CUresult CUDAAPI tcuEventQuery(CUevent hEvent);
 typedef CUresult CUDAAPI tcuEventRecord(CUevent hEvent, CUstream hStream);
 
 typedef CUresult CUDAAPI tcuLaunchKernel(CUfunction f, unsigned int gridDimX, unsigned int gridDimY, unsigned int gridDimZ, unsigned int blockDimX, unsigned int blockDimY, unsigned int blockDimZ, unsigned int sharedMemBytes, CUstream hStream, void** kernelParams, void** extra);
+typedef CUresult CUDAAPI tcuModuleLoad(CUmodule *module, const char *fname);
 typedef CUresult CUDAAPI tcuModuleLoadData(CUmodule* module, const void* image);
 typedef CUresult CUDAAPI tcuModuleLoadDataEx(CUmodule* module, const void* image, unsigned int numOptions, CUjit_option* options, void** optionValues);
 typedef CUresult CUDAAPI tcuModuleUnload(CUmodule module);

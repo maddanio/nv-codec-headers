@@ -191,6 +191,7 @@ typedef struct CudaFunctions {
     tcuEventRecord *cuEventRecord;
 
     tcuLaunchKernel *cuLaunchKernel;
+    tcuModuleLoad *cuModuleLoad;
     tcuModuleLoadData *cuModuleLoadData;
     tcuModuleLoadDataEx *cuModuleLoadDataEx;
     tcuModuleUnload *cuModuleUnload;
@@ -350,6 +351,7 @@ static inline int cuda_load_functions(CudaFunctions **functions, void *logctx)
     GET_PROC(cuGraphicsUnmapResources);
     GET_PROC(cuGraphicsSubResourceGetMappedArray);
 
+    GET_PROC(cuModuleLoad);
     GET_PROC(cuModuleLoadData);
     GET_PROC(cuModuleLoadDataEx);
     GET_PROC(cuModuleUnload);
