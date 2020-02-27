@@ -401,6 +401,7 @@ typedef CUresult CUDAAPI tcuEventQuery(CUevent hEvent);
 typedef CUresult CUDAAPI tcuEventRecord(CUevent hEvent, CUstream hStream);
 
 typedef CUresult CUDAAPI tcuLaunchKernel(CUfunction f, unsigned int gridDimX, unsigned int gridDimY, unsigned int gridDimZ, unsigned int blockDimX, unsigned int blockDimY, unsigned int blockDimZ, unsigned int sharedMemBytes, CUstream hStream, void** kernelParams, void** extra);
+typedef CUresult CUDAAPI tcuModuleLoad(CUmodule *module, const char *fname);
 typedef CUresult CUDAAPI tcuModuleLoadData(CUmodule* module, const void* image);
 typedef CUresult CUDAAPI tcuModuleLoadDataEx(CUmodule* module, const void* image, unsigned int numOptions, CUjit_option* options, void** optionValues);
 typedef CUresult CUDAAPI tcuModuleUnload(CUmodule module);
@@ -432,6 +433,11 @@ typedef CUresult  CUDAAPI tcuTexRefSetAddress2D_v2(CUtexref hTexRef, const CUDA_
 typedef CUresult  CUDAAPI tcuSurfObjectCreate(CUsurfObject *pSurfObject, const CUDA_RESOURCE_DESC *pResDesc);
 typedef CUresult  CUDAAPI tcuSurfObjectDestroy(CUsurfObject surfObject);
 typedef CUresult  CUDAAPI tcuSurfObjectGetResourceDesc(CUDA_RESOURCE_DESC *pResDesc, CUsurfObject surfObject);
+
+//cuda array
+typedef CUresult  CUDAAPI tcuArrayGetDescriptor(CUDA_ARRAY_DESCRIPTOR *pArrayDescriptor, CUarray hArray);
+typedef CUresult  CUDAAPI tcuArrayDestroy(CUarray hArray);
+typedef CUresult  CUDAAPI tcuArray3DGetDescriptor(CUDA_ARRAY3D_DESCRIPTOR *pArrayDescriptor, CUarray hArray);
 
 //more driver info
 typedef CUresult  CUDAAPI tcuDeviceGetAttribute(int *pi, CUdevice_attribute attrib, CUdevice dev);
