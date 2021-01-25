@@ -168,7 +168,6 @@ typedef struct CudaFunctions {
     tcuCtxPopCurrent_v2 *cuCtxPopCurrent;
     tcuCtxGetApiVersion *cuCtxGetApiVersion;
     tcuCtxGetCurrent *cuCtxGetCurrent;
-    tcuCtxGetDevice *cuCtxGetDevice;
     tcuCtxDestroy_v2 *cuCtxDestroy;
     tcuMemAlloc_v2 *cuMemAlloc;
     tcuMemAllocPitch_v2 *cuMemAllocPitch;
