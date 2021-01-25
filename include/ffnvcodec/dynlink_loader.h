@@ -178,6 +178,13 @@ typedef struct CudaFunctions {
     tcuMemcpy2DAsync_v2 *cuMemcpy2DAsync;
     tcuGetErrorName *cuGetErrorName;
     tcuGetErrorString *cuGetErrorString;
+    tcuCtxGetDevice *cuCtxGetDevice;
+
+    tcuDevicePrimaryCtxRetain *cuDevicePrimaryCtxRetain;
+    tcuDevicePrimaryCtxRelease *cuDevicePrimaryCtxRelease;
+    tcuDevicePrimaryCtxSetFlags *cuDevicePrimaryCtxSetFlags;
+    tcuDevicePrimaryCtxGetState *cuDevicePrimaryCtxGetState;
+    tcuDevicePrimaryCtxReset *cuDevicePrimaryCtxReset;
 
     tcuStreamCreate *cuStreamCreate;
     tcuStreamQuery *cuStreamQuery;
@@ -380,7 +387,6 @@ static inline int cuda_load_functions(CudaFunctions **functions, void *logctx)
     GET_PROC(cuSurfObjectDestroy);
     GET_PROC(cuSurfObjectGetResourceDesc);
     //cuda array
-    //cuda array
     GET_PROC(cuArrayGetDescriptor);
     GET_PROC(cuArrayDestroy);
     GET_PROC(cuArray3DGetDescriptor);
@@ -400,6 +406,13 @@ static inline int cuda_load_functions(CudaFunctions **functions, void *logctx)
     GET_PROC_OPTIONAL(cuDestroyExternalSemaphore);
     GET_PROC_OPTIONAL(cuSignalExternalSemaphoresAsync);
     GET_PROC_OPTIONAL(cuWaitExternalSemaphoresAsync);
+    
+    GET_PROC(cuDevicePrimaryCtxRetain);
+    GET_PROC(cuDevicePrimaryCtxRelease);
+    GET_PROC(cuDevicePrimaryCtxSetFlags);
+    GET_PROC(cuDevicePrimaryCtxGetState);
+    GET_PROC(cuDevicePrimaryCtxReset);
+
 
     GENERIC_LOAD_FUNC_FINALE(cuda);
 }

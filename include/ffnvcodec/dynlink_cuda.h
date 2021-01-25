@@ -41,24 +41,26 @@
 #define CU_CTX_SCHED_BLOCKING_SYNC 4
 
 typedef int CUdevice;
-typedef void* CUarray;
-typedef void* CUcontext;
-typedef void* CUstream;
-typedef void* CUevent;
-typedef void* CUfunction;
-typedef void* CUmodule;
-typedef void* CUtexref;
-typedef void* CUtexObject;
-typedef void* CUmipmappedArray;
-typedef void* CUgraphicsResource;
-typedef void* CUexternalMemory;
-typedef void* CUexternalSemaphore;
-typedef void* CUsurfObject;
 #if defined(__x86_64) || defined(AMD64) || defined(_M_AMD64) || defined(__LP64__)
 typedef unsigned long long CUdeviceptr;
 #else
 typedef unsigned int CUdeviceptr;
 #endif
+typedef unsigned long long CUtexObject;
+
+typedef struct CUarray_st            *CUarray;
+typedef struct CUctx_st              *CUcontext;
+typedef struct CUstream_st           *CUstream;
+typedef struct CUevent_st            *CUevent;
+typedef struct CUfunc_st             *CUfunction;
+typedef struct CUmod_st              *CUmodule;
+typedef struct CUmipmappedArray_st   *CUmipmappedArray;
+typedef struct CUgraphicsResource_st *CUgraphicsResource;
+typedef struct CUextMemory_st        *CUexternalMemory;
+typedef struct CUextSemaphore_st     *CUexternalSemaphore;
+
+typedef void* CUtexref;
+typedef void* CUsurfObject;
 
 typedef enum cudaError_enum {
     CUDA_SUCCESS = 0,
@@ -388,6 +390,13 @@ typedef CUresult CUDAAPI tcuMemcpy2D_v2(const CUDA_MEMCPY2D *pcopy);
 typedef CUresult CUDAAPI tcuMemcpy2DAsync_v2(const CUDA_MEMCPY2D *pcopy, CUstream hStream);
 typedef CUresult CUDAAPI tcuGetErrorName(CUresult error, const char** pstr);
 typedef CUresult CUDAAPI tcuGetErrorString(CUresult error, const char** pstr);
+typedef CUresult CUDAAPI tcuCtxGetDevice(CUdevice *device);
+
+typedef CUresult CUDAAPI tcuDevicePrimaryCtxRetain(CUcontext *pctx, CUdevice dev);
+typedef CUresult CUDAAPI tcuDevicePrimaryCtxRelease(CUdevice dev);
+typedef CUresult CUDAAPI tcuDevicePrimaryCtxSetFlags(CUdevice dev, unsigned int flags);
+typedef CUresult CUDAAPI tcuDevicePrimaryCtxGetState(CUdevice dev, unsigned int *flags, int *active);
+typedef CUresult CUDAAPI tcuDevicePrimaryCtxReset(CUdevice dev);
 
 typedef CUresult CUDAAPI tcuStreamCreate(CUstream *phStream, unsigned int flags);
 typedef CUresult CUDAAPI tcuStreamQuery(CUstream hStream);
